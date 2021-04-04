@@ -9,17 +9,22 @@ class HomePage extends Component {
     error: false,
     isLoading: false,
   };
+  
   componentDidMount() {
     this.getData();
   }
+
+  // componentDidUpdate(prevProps, prevState){
+  //   if (prevState.movies !== this.state.movies) {
+  //     this.getData();
+  // }
+// }
   getData = () => {
     const { page } = this.state;
     return getFetch(page)
-      .then((movies) => {
-        console.log(movies);
-        this.setState({
-          movies: [...movies],
-        });
+      .then((results) => {
+        console.log(results);
+        this.setState({ movies: results });
       })
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -27,12 +32,13 @@ class HomePage extends Component {
 
   render() {
     const { movies } = this.state;
-    console.log(movies);
+    console.dir(movies);
     return (
       <>
         <ul>
           {movies.map((movie) => {
-            return <li key={movie.id}>{movie.original_title}</li>;
+            console.log(movie);
+            return <li key={movie.id}>{movie.title}</li>;
           })}
         </ul>
       </>
