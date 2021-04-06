@@ -7,6 +7,6 @@ export default function fetchMovieDetail(id) {
 
   return axios
     .get(url)
-    .then((response) => response)
+    .then((response) => response.data)
     .catch((error) => console.log(error));
 }

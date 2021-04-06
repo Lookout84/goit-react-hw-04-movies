@@ -3,21 +3,18 @@ import routes from "../../../src/routes";
 import fetchMovieDetail from "../../services/apiMovieDetails";
 
 class MovieDetailsPage extends Component {
-  state = {
-    genre: null,
-    id: null,
-    title: null,
-  };
+  state = {};
 
   componentDidMount() {
-    // this.getData();
+    this.getData();
   }
 
   getData = () => {
     const { movieId } = this.props.match.params;
     return fetchMovieDetail(movieId)
       .then((results) => {
-        this.setState({ results });
+        console.log(results);
+        this.setState({ ...results });
       })
       .catch((error) => this.setState({ error }));
     // .finally(() => this.setState({ isLoading: false }));
@@ -29,18 +26,18 @@ class MovieDetailsPage extends Component {
   };
 
   render() {
-    const { imgUrl, title, author, descr } = this.state;
-
+    // const { movie } = this.state;
+    console.log(this.state);
     return (
       <div className="container-fluid">
         <button type="button" onClick={this.handleGoBack}>
           Вернуться назад
         </button>
 
-        <img src={imgUrl} alt="" />
-        <h2>{title}</h2>
-        {author && <p>Автор: {author.name}</p>}
-        <p>{descr}</p>
+        {/* <img src={movie.backdrop_path} alt={movie.title} />
+        <h2>{movie.title}</h2>
+        <p>Genres: {movie.genres}</p>
+        <p>{movie.overview}</p> */}
       </div>
     );
   }
