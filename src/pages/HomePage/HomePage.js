@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import getFetch from "../../services/apiMovieTrending";
+import Button from "../../components/Button/Button";
+import MoviesList from "../../components/MoviesList/MoviesList";
 
 // const { getFetch } = MovieTrending;
 class HomePage extends Component {
@@ -9,25 +11,26 @@ class HomePage extends Component {
     error: false,
     isLoading: false,
   };
-  
+
   componentDidMount() {
     this.getData();
   }
 
-  // componentDidUpdate(prevProps, prevState){
-  //   if (prevState.movies !== this.state.movies) {
-  //     this.getData();
-  // }
-// }
   getData = () => {
     const { page } = this.state;
     return getFetch(page)
       .then((results) => {
-        console.log(results);
-        this.setState({ movies: results });
+        this.setState((prevState) => ({
+          movies: [...results],
+          page: prevState.page + 1,
+        }));
       })
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
+  };
+
+  nextPageButton = () => {
+    this.getData();
   };
 
   render() {
@@ -35,12 +38,8 @@ class HomePage extends Component {
     console.dir(movies);
     return (
       <>
-        <ul>
-          {movies.map((movie) => {
-            console.log(movie);
-            return <li key={movie.id}>{movie.title}</li>;
-          })}
-        </ul>
+        <ul>{movies.length > 0 && <MoviesList movies={movies} />}</ul>
+        <Button onClick={this.nextPageButton} />
       </>
     );
   }

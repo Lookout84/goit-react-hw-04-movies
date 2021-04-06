@@ -6,7 +6,6 @@ const routes = [
     key: uuid(),
     exact: true,
     path: "/",
-    // path: `${match.url}`,
     component: lazy(() => import("./pages/HomePage/HomePage")),
   },
   {
@@ -15,11 +14,11 @@ const routes = [
     path: "/movies",
     component: lazy(() => import("./pages/MoviesPage/MoviesPage")),
   },
-  // {
-  //   key: uuid(),
-  //   exact: true,
-  //   path: "/contacts",
-  //   component: lazy(() => import("./pages/Contacts/Contacts")),
-  // },
+  {
+    key: uuid(),
+    exact: true,
+    path: "/movies/:movieId",
+    component: lazy(() => import("./pages/MovieDetailsPage/MovieDetailsPage")),
+  },
 ];
 export default routes;
