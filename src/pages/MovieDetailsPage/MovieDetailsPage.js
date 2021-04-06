@@ -1,23 +1,38 @@
 import React, { Component } from "react";
 import routes from "../../../src/routes";
 import fetchMovieDetail from "../../services/apiMovieDetails";
+import DetalisList from '../../components/DetalisList/DetalisList'
 
 class MovieDetailsPage extends Component {
-  state = {};
+  state = { movie: {}, genres: "", url: "https://image.tmdb.org/t/p/w500" };
 
   componentDidMount() {
-    this.getData();
+    this.getMovie();
+    this.getGenres();
   }
 
-  getData = () => {
+  getMovie = () => {
     const { movieId } = this.props.match.params;
     return fetchMovieDetail(movieId)
       .then((results) => {
         console.log(results);
-        this.setState({ ...results });
+        this.setState({ movie: { ...results } });
       })
       .catch((error) => this.setState({ error }));
     // .finally(() => this.setState({ isLoading: false }));
+  };
+
+  getGenres = () => {
+    const { movieId } = this.props.match.params;
+    return fetchMovieDetail(movieId)
+      .then((results) => results.genres)
+      .then((genres) => {
+        const result = genres
+          .map((id) => (id.name = " " + id.name))
+          .join(",  ");
+        return this.setState({ genres: [result] });
+      })
+      .catch((error) => this.setState({ error }));
   };
 
   handleGoBack = () => {
@@ -26,18 +41,13 @@ class MovieDetailsPage extends Component {
   };
 
   render() {
-    // const { movie } = this.state;
-    console.log(this.state);
+    const { movie, genres, url } = this.state;
     return (
       <div className="container-fluid">
         <button type="button" onClick={this.handleGoBack}>
           Вернуться назад
         </button>
-
-        {/* <img src={movie.backdrop_path} alt={movie.title} />
-        <h2>{movie.title}</h2>
-        <p>Genres: {movie.genres}</p>
-        <p>{movie.overview}</p> */}
+        <DetalisList movie={movie} genres={genres} url={url} />
       </div>
     );
   }
