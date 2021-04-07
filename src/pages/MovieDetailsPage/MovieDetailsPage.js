@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import routes from "../../../src/routes";
 import fetchMovieDetail from "../../services/apiMovieDetails";
-import DetalisList from '../../components/DetalisList/DetalisList'
+import DetalisList from "../../components/DetalisList/DetalisList";
 
 class MovieDetailsPage extends Component {
   state = { movie: {}, genres: "", url: "https://image.tmdb.org/t/p/w500" };
@@ -45,7 +45,7 @@ class MovieDetailsPage extends Component {
     return (
       <div className="container-fluid">
         <button type="button" onClick={this.handleGoBack}>
-          Вернуться назад
+          Go Back
         </button>
         <DetalisList movie={movie} genres={genres} url={url} />
       </div>

@@ -14,7 +14,7 @@ class Cast extends Component {
     return getFetchCast(movieId)
       .then((results) => {
         console.log(results);
-        this.setState({ cast: [ ...results ] });
+        this.setState({ cast: [...results] });
       })
       .catch((error) => this.setState({ error }));
     // .finally(() => this.setState({ isLoading: false }));
@@ -32,7 +32,7 @@ class Cast extends Component {
       <ul>
         {cast.map(({ name, profile_path, character, id }) => (
           <li key={id}>
-            <img src={url + profile_path} alt={name} />
+            <img src={url + profile_path} alt={name} width="150" />
             <p>{name}</p>
             <p>Character: {character}</p>
           </li>

@@ -3,7 +3,6 @@ import getFetch from "../../services/apiMovieTrending";
 import Button from "../../components/Button/Button";
 import MoviesList from "../../components/MoviesList/MoviesList";
 
-// const { getFetch } = MovieTrending;
 class HomePage extends Component {
   state = {
     movies: {},

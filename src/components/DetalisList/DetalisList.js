@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { NavLink, Route } from "react-router-dom";
+import Cast from "../Cast/Cast";
 
-const DetalisList = ({ movie, genres, url, location }) => {
+const DetalisList = ({ movie, genres, url }) => {
   return (
     <div key={movie.id}>
       <img src={url + movie.poster_path} alt={movie.title} />
@@ -11,33 +12,19 @@ const DetalisList = ({ movie, genres, url, location }) => {
       <h3>Overview: </h3>
       <p>{movie.overview}</p>
 
-      <ul className="CastList">
+      <ul className="List">
         <li>
-            <Link
-              to={{
-                pathname: `/movies/${movie.id}/cast`,
-                state: { from: location },
-              }}
-            >
-              Cast
-            </Link>
-          </li> 
-      </ul>
-      <ul className="ReviewsList">
+          <NavLink to={`/movies/${movie.id}/cast`}>Cast</NavLink>
+        </li>
         <li>
-            <Link
-              to={{
-                pathname: `/movies/${movie.id}/reviews`,
-                state: { from: location },
-              }}
-            >
-              Reviews
-            </Link>
-          </li> 
+          <NavLink to={`/movies/${movie.id}/reviews`}>Reviews</NavLink>
+        </li>
       </ul>
-      
+      <Route path={`/movies/${movie.id}/cast`}>
+        <Cast />
+      </Route>
     </div>
   );
 };
 
-export default withRouter(DetalisList);
+export default DetalisList;
