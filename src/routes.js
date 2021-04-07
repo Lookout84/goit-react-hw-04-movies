@@ -20,17 +20,19 @@ const routes = [
     path: "/movies/:movieId",
     component: lazy(() => import("./pages/MovieDetailsPage/MovieDetailsPage")),
   },
-  {
-    key: uuid(),
-    exact: true,
-    path: "/movies/:movieId/cast",
-    component: lazy(() => import("./components/Cast/Cast")),
-  },
-  {
-    key: uuid(),
-    exact: true,
-    path: "/movies/:movieId/reviews",
-    component: lazy(() => import("./components/Reviews/Reviews")),
-  },
+  // {
+  //   key: uuid(),
+  //   exact: true,
+  //   path: "/movies/:movieId/cast",
+  //   component: lazy(() => import("./components/Cast/Cast")),
+  // },
+  // {
+  //   key: uuid(),
+  //   exact: true,
+  //   path: "/movies/:movieId/reviews",
+  //   component: lazy(() => import("./components/Reviews/Reviews")),
+  // },
 ];
+
+
 export default routes;
