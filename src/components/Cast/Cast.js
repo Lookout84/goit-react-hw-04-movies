@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import routes from "../../../src/routes";
+//import routes from "../../../src/routes";
 import getFetchCast from "../../services/apiMovieCast";
 
 class Cast extends Component {
@@ -20,24 +20,23 @@ class Cast extends Component {
     // .finally(() => this.setState({ isLoading: false }));
   };
 
-  handleGoBack = () => {
-    const { location, history } = this.props;
-    history.push(location?.state?.from || routes.movies);
-  };
-
   render() {
     const { cast, url } = this.state;
     console.log(cast);
     return (
-      <ul>
-        {cast.map(({ name, profile_path, character, id }) => (
-          <li key={id}>
-            <img src={url + profile_path} alt={name} width="150" />
-            <p>{name}</p>
-            <p>Character: {character}</p>
-          </li>
-        ))}
-      </ul>
+      <div>
+        {cast && (
+          <ul>
+            {cast.map(({ name, profile_path, character, id }) => (
+              <li key={id}>
+                <img src={url + profile_path} alt={name} width="150" />
+                <p>{name}</p>
+                <p>Character: {character}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     );
   }
 }
