@@ -16,7 +16,7 @@ const routes = [
   },
   {
     key: uuid(),
-    exact: true,
+    exact: false,
     path: "/movies/:movieId",
     component: lazy(() => import("./pages/MovieDetailsPage/MovieDetailsPage")),
   },

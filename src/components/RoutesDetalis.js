@@ -1,11 +1,11 @@
+import React, { Suspense } from "react";
+import { Switch, Route } from "react-router-dom";
+
 import addRoutes from "../addRoutes";
 import { withRouter } from "react-router-dom";
 
-import React, { Suspense } from "react";
-import { Switch, Route } from "react-router-dom";
-// import Spinner from "../../components/Spinner";
-
 const RoutesDetalis = ({ match, ...props }) => {
+  console.log(props)
   return (
     <Suspense fallback="Waiting...">
       <Switch>

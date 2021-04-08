@@ -20,16 +20,17 @@ class MovieDetailsPage extends Component {
   componentDidMount() {
     this.getMovie();
     this.getGenres();
-    // this.getCast();
   }
 
   getMovie = () => {
     const { movieId } = this.props.match.params;
     return fetchMovieDetail(movieId)
       .then((results) => {
-        console.log(results);
+        console.log(this.props.match.params.movieId);
+
         this.setState({
-          movie: { ...results, id: this.props.match.params.movieId },
+          movie: { ...results },
+          id: this.props.match.params.movieId,
         });
       })
       .catch((error) => this.setState({ error }))
@@ -68,34 +69,39 @@ class MovieDetailsPage extends Component {
   render() {
     const { match } = this.props;
     console.log(match);
+    console.log(this.props.location.state.from);
     const { movie, genres, url, id } = this.state;
     return (
-      <div className="container-fluid">
+      <>
         <button type="button" onClick={this.handleGoBack}>
           Go Back
         </button>
-        <DetalisList movie={movie} genres={genres} url={url} />
-        
-        <ul className="List">
-          {addRoutes.map(({ exact, name, url }) => (
-            <li>
-              <NavLink
-                exact={exact}
-                to={{
-                  pathname: `${match.url}${url}`,
-                  state: {
-                    from: this.props.location.state.from,
-                    id: id,
-                  },
-                }}
-              >
-                {name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-        <RoutesDetalies />
-      </div>
+        <div className="container-fluid">
+          <DetalisList movie={movie} genres={genres} url={url} />
+        </div>
+        <div>
+          <p>Additional information</p>
+          <ul className="List">
+            {addRoutes.map(({ exact, name, url }) => (
+              <li key={name}>
+                <NavLink
+                  exact={exact}
+                  to={{
+                    pathname: `${match.url}${url}`,
+                    state: {
+                      from: this.props.location.state.from,
+                      id: id,
+                    },
+                  }}
+                >
+                  {name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+          <RoutesDetalies />
+        </div>
+      </>
     );
   }
 }

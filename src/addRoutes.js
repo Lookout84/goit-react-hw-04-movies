@@ -7,7 +7,7 @@ const addRoutes = [
     name: "Cast",
     exact: true,
     component: lazy(() =>
-      import("./components/Cast/Cast.js" /* webpackChunkName: "Cast" */)
+      import("./components/Cast/Cast" /* webpackChunkName: "Cast" */)
     ),
   },
   {
@@ -16,7 +16,7 @@ const addRoutes = [
     name: "Reviews",
     exact: true,
     component: lazy(() =>
-      import("./components/Reviews/Reviews.js" /* webpackChunkName: "Reviews" */)
+      import("./components/Reviews/Reviews" /* webpackChunkName: "Reviews" */)
     ),
   },
 ];

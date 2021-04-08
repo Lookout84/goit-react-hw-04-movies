@@ -10,7 +10,7 @@ class Cast extends Component {
   }
 
   getCast = () => {
-    const { movieId } = this.props.match.params;
+    const movieId = this.props.location.state.id;
     return getFetchCast(movieId)
       .then((results) => {
         console.log(results);
@@ -22,10 +22,10 @@ class Cast extends Component {
 
   render() {
     const { cast, url } = this.state;
-    console.log(cast);
     return (
       <div>
-        {cast && (
+        <h4>Cast</h4>
+        {cast.length >0 && (
           <ul>
             {cast.map(({ name, profile_path, character, id }) => (
               <li key={id}>
