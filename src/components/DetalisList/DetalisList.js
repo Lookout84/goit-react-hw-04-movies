@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const DetalisList = ({ movie, genres, url }) => {
   return (
     <div key={movie.id}>
@@ -11,7 +10,7 @@ const DetalisList = ({ movie, genres, url }) => {
       <h3>Genres: </h3>
       <p>{genres}</p>
       <h3>Overview: </h3>
-      <p>{movie.overview}</p>
+      <p>{movie.overview || "This movie has no overview yet."}</p>
     </div>
   );
 };
