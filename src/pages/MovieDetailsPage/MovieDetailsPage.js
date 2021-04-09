@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import routes from "../../../src/routes";
-import fetchMovieDetail from "../../services/apiMovieDetails";
+import {fetchMovieDetail} from "../../services/apiMoviesFetch";
 import DetalisList from "../../components/DetalisList/DetalisList";
 import { NavLink } from "react-router-dom";
 import addRoutes from "../../../src/addRoutes";
 import RoutesDetalies from "../../components/RoutesDetalis";
-// import getFetchCast from "../../services/apiMovieCast";
 
 class MovieDetailsPage extends Component {
   state = {

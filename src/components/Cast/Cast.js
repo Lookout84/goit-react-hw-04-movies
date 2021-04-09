@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 //import routes from "../../../src/routes";
-import getFetchCast from "../../services/apiMovieCast";
+import {getFetchCast} from "../../services/apiMoviesFetch";
+import imgError from "../../img/img-error.png";
 
 class Cast extends Component {
   state = { cast: [], url: "https://image.tmdb.org/t/p/w500" };
@@ -25,11 +26,15 @@ class Cast extends Component {
     return (
       <div>
         <h4>Cast</h4>
-        {cast.length >0 && (
+        {cast.length > 0 && (
           <ul>
             {cast.map(({ name, profile_path, character, id }) => (
               <li key={id}>
-                <img src={url + profile_path} alt={name} width="150" />
+                <img
+                  src={profile_path ? `${url + profile_path}` : `${imgError}`}
+                  alt={name}
+                  width="150"
+                />
                 <p>{name}</p>
                 <p>Character: {character}</p>
               </li>

@@ -1,9 +1,10 @@
 import React from "react";
+import imgError from "../../img/img-error.png";
 
 const DetalisList = ({ movie, genres, url }) => {
   return (
     <div key={movie.id}>
-      <img src={url + movie.poster_path} alt={movie.title} />
+      <img src={movie.poster_path ? `${url + movie.poster_path}` : `${imgError}`  } alt={movie.title} />
       <h2>{movie.title}</h2>
       <h3>User score: </h3>
       <p>{movie.vote_average * 10}%</p>

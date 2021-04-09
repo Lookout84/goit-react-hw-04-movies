@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import getFetch from "../../services/apiMovieTrending";
+import {getFetchTrending} from "../../services/apiMoviesFetch";
 import Button from "../../components/Button/Button";
 import MoviesList from "../../components/MoviesList/MoviesList";
 
@@ -17,7 +17,7 @@ class HomePage extends Component {
 
   getData = () => {
     const { page } = this.state;
-    return getFetch(page)
+    return getFetchTrending(page)
       .then((results) => {
         this.setState((prevState) => ({
           movies: [...results],
