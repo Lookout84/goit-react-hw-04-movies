@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-//import routes from "../../../src/routes";
-import {getFetchCast} from "../../services/apiMoviesFetch";
+import { getFetchCast } from "../../services/apiMoviesFetch";
 import imgError from "../../img/img-error.png";
 
 class Cast extends Component {
-  state = { cast: [], url: "https://image.tmdb.org/t/p/w500" };
+  state = {
+    cast: [],
+    url: "https://image.tmdb.org/t/p/w500",
+    isLoading: false,
+  };
 
   componentDidMount() {
     this.getCast();
@@ -17,8 +20,8 @@ class Cast extends Component {
         console.log(results);
         this.setState({ cast: [...results] });
       })
-      .catch((error) => this.setState({ error }));
-    // .finally(() => this.setState({ isLoading: false }));
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
   };
 
   render() {
@@ -47,27 +50,3 @@ class Cast extends Component {
 }
 
 export default Cast;
-
-// import React from "react";
-// import { Link, withRouter } from "react-router-dom";
-
-// const Cast = ({ movies, location }) => {
-//   return (
-//     <ul className="CastList">
-//       {movies.map(({ id, title }) => (
-//         <li key={id}>
-//           <Link
-//             to={{
-//               pathname: `/movies/${id}`,
-//               state: { from: location },
-//             }}
-//           >
-//             {title}
-//           </Link>
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// };
-
-// export default withRouter(Cast);

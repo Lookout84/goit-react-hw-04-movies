@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import routes from "../../../src/routes";
-import {fetchMovieDetail} from "../../services/apiMoviesFetch";
+import { fetchMovieDetail } from "../../services/apiMoviesFetch";
 import DetalisList from "../../components/DetalisList/DetalisList";
 import { NavLink } from "react-router-dom";
 import addRoutes from "../../../src/addRoutes";
 import RoutesDetalies from "../../components/RoutesDetalis";
+import s from "./MovieDetailsPage.module.css";
 
 class MovieDetailsPage extends Component {
   state = {
@@ -49,17 +50,6 @@ class MovieDetailsPage extends Component {
       .catch((error) => this.setState({ error }));
   };
 
-  // getCast = () => {
-  //   const { movieId } = this.props.match.params;
-  //   return getFetchCast(movieId)
-  //     .then((results) => {
-  //       console.log(results);
-  //       this.setState({ cast: [...results] });
-  //     })
-  //     .catch((error) => this.setState({ error }));
-  //   // .finally(() => this.setState({ isLoading: false }));
-  // };
-
   handleGoBack = () => {
     const { location, history } = this.props;
     history.push(location?.state?.from || routes.movies);
@@ -72,7 +62,7 @@ class MovieDetailsPage extends Component {
     const { movie, genres, url, id } = this.state;
     return (
       <>
-        <button type="button" onClick={this.handleGoBack}>
+        <button className={s.Button} type="button" onClick={this.handleGoBack}>
           Go Back
         </button>
         <div className="container-fluid">
@@ -106,34 +96,3 @@ class MovieDetailsPage extends Component {
 }
 
 export default MovieDetailsPage;
-
-// {
-//   /* <Switch>
-//           <Route path={`${match.path}:movieId/cast`} component={Cast} /> */
-// }
-// {
-//   /* <Route path="/movies/:movieId/reviews" component={MoviesReviews} /> */
-// }
-// // </Switch>
-// {
-//   /* <Route
-//           path={`${match.path}:movieId/cast`}
-//           render={(props) => {
-//             // const momieId = Number(props.match.params.movieId);
-//             // const casts = cast.find(({ id }) => id === momieId);
-//             // console.log(casts);
-//             return (
-//               <ul>
-//                 {cast.map(({ name, profile_path, character, id }) => (
-//                   <li key={id}>
-//                     <img src={url + profile_path} alt={name} width="150" />
-//                     <p>{name}</p>
-//                     <p>Character: {character}</p>
-//                   </li>
-//                 ))}
-//               </ul>
-//               // <Cast cast={cast} url={url} />;
-//             );
-//           }}
-//         /> */
-// }

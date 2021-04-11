@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import {getFetchTrending} from "../../services/apiMoviesFetch";
+import { getFetchTrending } from "../../services/apiMoviesFetch";
 import Button from "../../components/Button/Button";
 import MoviesList from "../../components/MoviesList/MoviesList";
+import PropTypes from "prop-types";
 
 class HomePage extends Component {
   state = {
@@ -44,3 +45,8 @@ class HomePage extends Component {
   }
 }
 export default HomePage;
+
+HomePage.propTypes = {
+  onClick: PropTypes.func,
+  movies: PropTypes.object,
+};

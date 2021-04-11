@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getFetchMoviesSearch } from "../../services/apiMoviesFetch";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import Button from "../../components/Button/Button";
+import PropTypes from "prop-types";
 
 class MoviesPage extends Component {
   state = {
@@ -15,7 +16,9 @@ class MoviesPage extends Component {
   componentDidMount() {
     const { queryValue } = this.state;
     if (queryValue) {
-        getFetchMoviesSearch(queryValue).then((movies) => this.setState({ movies }));
+      getFetchMoviesSearch(queryValue).then((movies) =>
+        this.setState({ movies })
+      );
     }
   }
 
@@ -68,10 +71,15 @@ class MoviesPage extends Component {
           </button>
         </form>
         <ul>{movies.length > 0 && <MoviesList movies={movies} />}</ul>
-        {movies.length > 0 && (<Button onClick={this.nextPageButton} />)}
+        {movies.length > 0 && <Button onClick={this.nextPageButton} />}
       </>
     );
   }
 }
 
 export default MoviesPage;
+
+MoviesPage.propTypes = {
+  onSubmit: PropTypes.func,
+  movies: PropTypes.object,
+};

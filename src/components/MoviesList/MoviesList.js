@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 
+
 const MoviesList = ({ movies, location }) => {
   return (
     <ul className="MovieList">

@@ -5,12 +5,12 @@ import { withRouter } from "react-router-dom";
 
 const Navigation = ({ match }) => {
   return (
-    <nav>
+    <nav className={s.Nav}>
       <ul className={s.navList}>
-        <li>
+        <li className={s.navLink}>
           <NavLink to={`${match.url}`}>Home</NavLink>
         </li>
-        <li>
+        <li className={s.navLink}>
           <NavLink to={`${match.url}movies`}>Movies</NavLink>
         </li>
       </ul>
