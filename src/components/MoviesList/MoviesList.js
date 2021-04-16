@@ -1,24 +1,65 @@
 import React from "react";
+import { Card, CardColumns, Row, Col, Container } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
+import imgError from "../../img/img-error.png";
 
-
-const MoviesList = ({ movies, location }) => {
+const MoviesList = ({ movies, location, url }) => {
   return (
-    <ul className="MovieList">
-      {movies.map(({ id, title }) => (
-        <li key={id}>
-          <Link
-            to={{
-              pathname: `/movies/${id}`,
-              state: { from: location },
-            }}
-          >
-            {title}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <Container>
+      <Row className="justify-content-md-center">
+        {movies.map(({ id, title, poster_path }) => (
+          <Col xs={6} md={4} key={id}>
+            <CardColumns className="mr-2">
+              <Card style={{ width: "18rem" }}>
+                <Card.Img
+                  variant="top"
+                  src={poster_path ? `${url + poster_path}` : `${imgError}`}
+                  alt={title}
+                  width="200"
+                  height="auto"
+                />
+                <Card.Body>
+                  <Card.Title
+                    as={Link}
+                    to={{
+                      pathname: `/movies/${id}`,
+                      state: { from: location },
+                    }}
+                  >
+                    {title}
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </CardColumns>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 };
 
 export default withRouter(MoviesList);
+
+<Card style={{ width: "18rem" }}>
+  <Card.Img variant="top" src="holder.js/100px180" />
+  <Card.Body>
+    <Card.Title>Card Title</Card.Title>
+  </Card.Body>
+</Card>;
+
+// {
+//   /* <ul className="MovieList">
+//   {movies.map(({ id, title, poster_path }) => (
+//     <li key={id}>
+//       <Link
+//         to={{
+//           pathname: `/movies/${id}`,
+//           state: { from: location },
+//         }}
+//       >
+//         {title}
+//       </Link>
+//     </li>
+//   ))}
+// </ul> */
+// }

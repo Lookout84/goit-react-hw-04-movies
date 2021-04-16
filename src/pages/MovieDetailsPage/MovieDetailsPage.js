@@ -5,7 +5,7 @@ import DetalisList from "../../components/DetalisList/DetalisList";
 import { NavLink } from "react-router-dom";
 import addRoutes from "../../../src/addRoutes";
 import RoutesDetalies from "../../components/RoutesDetalis";
-import s from "./MovieDetailsPage.module.css";
+import { Button, Container, Card, Row, Col } from "react-bootstrap";
 
 class MovieDetailsPage extends Component {
   state = {
@@ -62,34 +62,45 @@ class MovieDetailsPage extends Component {
     const { movie, genres, url, id } = this.state;
     return (
       <>
-        <button className={s.Button} type="button" onClick={this.handleGoBack}>
+        <Button
+          variant="primary"
+          type="button"
+          onClick={this.handleGoBack}
+          className="mb-1"
+        >
           Go Back
-        </button>
-        <div className="container-fluid">
+        </Button>
+        <Container>
           <DetalisList movie={movie} genres={genres} url={url} />
-        </div>
-        <div>
-          <p>Additional information</p>
-          <ul className="List">
-            {addRoutes.map(({ exact, name, url }) => (
-              <li key={name}>
-                <NavLink
-                  exact={exact}
-                  to={{
-                    pathname: `${match.url}${url}`,
-                    state: {
-                      from: this.props.location.state.from,
-                      id: id,
-                    },
-                  }}
-                >
-                  {name}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+          <Row className="justify-content-md-center">
+            <Col md="auto">
+              <Card style={{ width: "40rem" }}>
+                <Card.Body>
+                  <Card.Title>Additional information</Card.Title>
+                </Card.Body>
+                <Card.Body>
+                  {addRoutes.map(({ exact, name, url }) => (
+                    <Card.Link
+                      key={name}
+                      as={NavLink}
+                      exact={exact}
+                      to={{
+                        pathname: `${match.url}${url}`,
+                        state: {
+                          from: this.props.location.state.from,
+                          id: id,
+                        },
+                      }}
+                    >
+                      {name}
+                    </Card.Link>
+                  ))}
+                </Card.Body>
           <RoutesDetalies />
-        </div>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getFetchTrending } from "../../services/apiMoviesFetch";
-import Button from "../../components/Button/Button";
+import NextButton from "../../components/Button/Button";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import PropTypes from "prop-types";
 
@@ -10,6 +10,7 @@ class HomePage extends Component {
     page: 1,
     error: false,
     isLoading: false,
+    url: "https://image.tmdb.org/t/p/w500",
   };
 
   componentDidMount() {
@@ -34,12 +35,12 @@ class HomePage extends Component {
   };
 
   render() {
-    const { movies } = this.state;
+    const { movies, url } = this.state;
     console.dir(movies);
     return (
       <>
-        <ul>{movies.length > 0 && <MoviesList movies={movies} />}</ul>
-        <Button onClick={this.nextPageButton} />
+        <ul>{movies.length > 0 && <MoviesList movies={movies} url={url} />}</ul>
+        <NextButton onClick={this.nextPageButton} />
       </>
     );
   }

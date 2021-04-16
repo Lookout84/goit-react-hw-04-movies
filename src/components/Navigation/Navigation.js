@@ -1,20 +1,29 @@
 import React from "react";
-import s from "./Navigation.module.css";
+// import s from "./Navigation.module.css";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import { Nav, Navbar} from "react-bootstrap";
 
 const Navigation = ({ match }) => {
   return (
-    <nav className={s.Nav}>
-      <ul className={s.navList}>
-        <li className={s.navLink}>
-          <NavLink to={`${match.url}`}>Home</NavLink>
-        </li>
-        <li className={s.navLink}>
-          <NavLink to={`${match.url}movies`}>Movies</NavLink>
-        </li>
-      </ul>
-    </nav>
+    <Navbar className="mb-3" bg="primary" variant="dark" >
+      <Nav className="mr-auto">
+        <Nav.Link as={NavLink} to={`${match.url}`}>
+          Home
+        </Nav.Link>
+        <Nav.Link as={NavLink} to={`${match.url}movies`}>
+          Movies
+        </Nav.Link>
+      </Nav>
+    </Navbar>
+    // <Nav as="ul">
+    //   <Nav.Item as={NavLink} to={`${match.url}`}>
+    //     Home
+    //   </Nav.Item>
+    //   <Nav.Item as={NavLink} to={`${match.url}movies`}>
+    //     Movies
+    //   </Nav.Item>
+    // </Nav>
   );
 };
 export default withRouter(Navigation);

@@ -1,14 +1,24 @@
 import React, { Component } from "react";
-import s from "./Button.module.css";
+import { Button, Container, Row, Col } from "react-bootstrap";
 
-class Button extends Component {
+class NextButton extends Component {
   render() {
     return (
-      <button className={s.Button} type="button" onClick={this.props.onClick}>
-        Next page
-      </button>
+      <Container fluid="md">
+        <Row className="justify-content-md-center">
+          <Col md="auto">
+            <Button
+              variant="primary"
+              type="button"
+              onClick={this.props.onClick}
+            >
+              Next page
+            </Button>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
 
-export default Button;
+export default NextButton;
