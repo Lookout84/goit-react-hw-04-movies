@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import {getFetchReviews} from "../../services/apiMoviesFetch";
+import { Card, Container, Row  } from "react-bootstrap";
+import { getFetchReviews } from "../../services/apiMoviesFetch";
 
 class Reviews extends Component {
   state = { reviews: [] };
@@ -22,20 +23,24 @@ class Reviews extends Component {
   render() {
     const { reviews } = this.state;
     return (
-      <>
-      <h4>Reviews</h4>
-      {reviews.length >0 ?
-        (<ul>
-            {reviews.map(({author, content, id})=> (
-                <li key={id}>
-                    <h3>Author: {author}</h3>
-                    <p>{content}</p>
-                </li>
-            ))}
-        </ul>) : <p>We don't have any reviews for this movie</p>
-      
-      }
-      </>
+      <Container>
+        <Card.Title>Reviews</Card.Title>
+        <Row className="justify-content-md-center">
+        {reviews.length > 0 ? (
+          <Card>
+          {reviews.map(({ author, content, id }) => (
+              <Card.Body key={id}>
+                <Card.Title>Author: {author}</Card.Title>
+                <Card.Text>{content}</Card.Text>
+              </Card.Body>
+            ))
+          }
+          </Card>
+        ) : (
+          <p>We don't have any reviews for this movie</p>
+        )}
+        </Row>
+        </Container>
     );
   }
 }
