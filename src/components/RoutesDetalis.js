@@ -4,8 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import addRoutes from "../addRoutes";
 import { withRouter } from "react-router-dom";
 
-const RoutesDetalis = ({ match, ...props }) => {
-  console.log(props)
+const RoutesDetalis = ({ match }) => {
   return (
     <Suspense fallback="Waiting...">
       <Switch>

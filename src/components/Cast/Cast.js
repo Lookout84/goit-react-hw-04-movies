@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { getFetchCast } from "../../services/apiMoviesFetch";
-import imgError from "../../img/img-error.png";
 import { Card, Container, Col, Row, CardColumns } from "react-bootstrap";
 
+const imgError = `https://i.ibb.co/TTCCj2F/img-error.png`;
 class Cast extends Component {
   state = {
     cast: [],
@@ -18,7 +18,6 @@ class Cast extends Component {
     const movieId = this.props.location.state.id;
     return getFetchCast(movieId)
       .then((results) => {
-        console.log(results);
         this.setState({ cast: [...results] });
       })
       .catch((error) => this.setState({ error }))
