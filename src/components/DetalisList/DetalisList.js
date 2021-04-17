@@ -1,5 +1,4 @@
 import React from "react";
-import imgError from "../../img/img-error.png";
 import {
   Card,
   ListGroup,
@@ -8,6 +7,8 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+
+const imgError = `https://i.ibb.co/TTCCj2F/img-error.png`;
 
 const DetalisList = ({ movie, genres, url }) => {
   return (

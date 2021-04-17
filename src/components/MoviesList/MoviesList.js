@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, CardColumns, Row, Col, Container } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
-import imgError from "../../img/img-error.png";
 
+const imgError = `https://i.ibb.co/TTCCj2F/img-error.png`;
 const MoviesList = ({ movies, location, url }) => {
   return (
     <Container>
@@ -39,27 +39,3 @@ const MoviesList = ({ movies, location, url }) => {
 };
 
 export default withRouter(MoviesList);
-
-<Card style={{ width: "18rem" }}>
-  <Card.Img variant="top" src="holder.js/100px180" />
-  <Card.Body>
-    <Card.Title>Card Title</Card.Title>
-  </Card.Body>
-</Card>;
-
-// {
-//   /* <ul className="MovieList">
-//   {movies.map(({ id, title, poster_path }) => (
-//     <li key={id}>
-//       <Link
-//         to={{
-//           pathname: `/movies/${id}`,
-//           state: { from: location },
-//         }}
-//       >
-//         {title}
-//       </Link>
-//     </li>
-//   ))}
-// </ul> */
-// }
