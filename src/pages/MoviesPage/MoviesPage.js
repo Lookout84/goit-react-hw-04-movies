@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import { getFetchMoviesSearch } from "../../services/apiMoviesFetch";
 import MoviesList from "../../components/MoviesList/MoviesList";
-import NextButton from "../../components/Button/Button";
+import PrevButton from "../../components/Button/PrevButton";
+import NextButton from "../../components/Button/NextButton";
 import PropTypes from "prop-types";
-import {
-  InputGroup,
-  Form,
-  FormControl,
-  Button,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import FormSearch from "../../components/Form/FormSearch";
 
 class MoviesPage extends Component {
   state = {
@@ -35,6 +29,9 @@ class MoviesPage extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.queryValue !== this.state.queryValue) {
       this.getData();
+      this.setState((prevState) => ({
+        page: prevState.page + 1,
+      }));
     }
   }
 
@@ -43,10 +40,8 @@ class MoviesPage extends Component {
     const { page } = this.state;
     return getFetchMoviesSearch(page, queryValue)
       .then((results) => {
-        console.log(results);
         this.setState((prevState) => ({
           movies: [...results],
-          page: prevState.page + 1,
         }));
       })
       .catch((error) => this.setState({ error }))
@@ -55,6 +50,16 @@ class MoviesPage extends Component {
 
   nextPageButton = () => {
     this.getData();
+    this.setState((prevState) => ({
+      page: prevState.page + 1,
+    }));
+  };
+
+  prevPageButton = () => {
+    this.getData();
+    this.setState((prevState) => ({
+      page: prevState.page - 1,
+    }));
   };
 
   validateInput = (value) => {
@@ -71,37 +76,23 @@ class MoviesPage extends Component {
   };
 
   render() {
-    const { movies, url } = this.state;
+    const { movies, url, page } = this.state;
     return (
       <>
-        <Container fluid="md" className="mb-3">
+        <FormSearch onSubmit={this.onSubmit} />
+        <Container>
+          {movies.length > 0 && <MoviesList movies={movies} url={url} />}
+        </Container>
+        <Container fluid="md">
           <Row className="justify-content-md-center">
             <Col md="auto">
-              <Form onSubmit={this.onSubmit}>
-                <InputGroup className="mb-3">
-                  <FormControl
-                    placeholder="Search Movie"
-                    aria-label="Search Movie"
-                    aria-describedby="basic-addon2"
-                    type="text"
-                    name="queryValue"
-                  />
-                  <InputGroup.Append>
-                    <Button
-                      variant="outline-secondary"
-                      type="submit"
-                      onSubmit={this.onSubmit}
-                    >
-                      Search
-                    </Button>
-                  </InputGroup.Append>
-                </InputGroup>
-              </Form>
+              {page > 2 && <PrevButton onClick={this.prevPageButton} />}
+              {movies.length > 0 && (
+                <NextButton onClick={this.nextPageButton} />
+              )}
             </Col>
           </Row>
         </Container>
-        <ul>{movies.length > 0 && <MoviesList movies={movies} url={url} />}</ul>
-        {movies.length > 0 && <NextButton onClick={this.nextPageButton} />}
       </>
     );
   }
@@ -113,10 +104,3 @@ MoviesPage.propTypes = {
   onSubmit: PropTypes.func,
   movies: PropTypes.object,
 };
-
-// {/* <form onSubmit={this.onSubmit}>
-//   <input type="text" name="queryValue" placeholder="Search Movie" />
-//   <button type="submit" onSubmit={this.onSubmit}>
-//     Search
-//   </button>
-// </form> */}

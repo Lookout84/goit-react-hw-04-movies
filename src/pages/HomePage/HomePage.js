@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { getFetchTrending } from "../../services/apiMoviesFetch";
-import NextButton from "../../components/Button/Button";
+import PrevButton from "../../components/Button/PrevButton";
+import NextButton from "../../components/Button/NextButton";
 import MoviesList from "../../components/MoviesList/MoviesList";
 import PropTypes from "prop-types";
+import { Container, Row, Col } from "react-bootstrap";
 
 class HomePage extends Component {
   state = {
@@ -15,6 +17,9 @@ class HomePage extends Component {
 
   componentDidMount() {
     this.getData();
+    this.setState((prevState) => ({
+      page: prevState.page + 1,
+    }));
   }
 
   getData = () => {
@@ -23,7 +28,6 @@ class HomePage extends Component {
       .then((results) => {
         this.setState((prevState) => ({
           movies: [...results],
-          page: prevState.page + 1,
         }));
       })
       .catch((error) => this.setState({ error }))
@@ -32,15 +36,31 @@ class HomePage extends Component {
 
   nextPageButton = () => {
     this.getData();
+    this.setState((prevState) => ({
+      page: prevState.page + 1,
+    }));
+  };
+
+  prevPageButton = () => {
+    this.getData();
+    this.setState((prevState) => ({
+      page: prevState.page - 1,
+    }));
   };
 
   render() {
-    const { movies, url } = this.state;
-    console.dir(movies);
+    const { movies, url, page } = this.state;
     return (
       <>
-        <ul>{movies.length > 0 && <MoviesList movies={movies} url={url} />}</ul>
-        <NextButton onClick={this.nextPageButton} />
+        {movies.length > 0 && <MoviesList movies={movies} url={url} />}
+        <Container fluid="md">
+          <Row className="justify-content-md-center">
+            <Col md="auto">
+              {page > 2 && <PrevButton onClick={this.prevPageButton} />}
+              <NextButton onClick={this.nextPageButton} />
+            </Col>
+          </Row>
+        </Container>
       </>
     );
   }

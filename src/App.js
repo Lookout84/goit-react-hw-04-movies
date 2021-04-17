@@ -6,11 +6,6 @@ import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import routes from "./routes";
 import { Container } from "react-bootstrap";
-// {connect}
-// экшены и редюсеры
-
-// import { getCocktail } from './services/cocktailsApi'
-// getCocktail('margarita').then((d) => console.log(d))
 
 function App() {
   return (
