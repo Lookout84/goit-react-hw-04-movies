@@ -26,8 +26,6 @@ class MovieDetailsPage extends Component {
     const { movieId } = this.props.match.params;
     return fetchMovieDetail(movieId)
       .then((results) => {
-        console.log(this.props.match.params.movieId);
-
         this.setState({
           movie: { ...results },
           id: this.props.match.params.movieId,
@@ -57,8 +55,6 @@ class MovieDetailsPage extends Component {
 
   render() {
     const { match } = this.props;
-    console.log(match);
-    console.log(this.props.location.state.from);
     const { movie, genres, url, id } = this.state;
     return (
       <>
@@ -96,7 +92,7 @@ class MovieDetailsPage extends Component {
                     </Card.Link>
                   ))}
                 </Card.Body>
-          <RoutesDetalies />
+                <RoutesDetalies />
               </Card>
             </Col>
           </Row>
