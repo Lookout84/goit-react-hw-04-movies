@@ -5,6 +5,7 @@ import PrevButton from "../../components/Button/PrevButton";
 import NextButton from "../../components/Button/NextButton";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
+import routes from "../../../src/routes";
 import FormSearch from "../../components/Form/FormSearch";
 
 class MoviesPage extends Component {
@@ -29,20 +30,17 @@ class MoviesPage extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.queryValue !== this.state.queryValue) {
       this.getData();
-      this.setState((prevState) => ({
-        page: prevState.page + 1,
-      }));
     }
   }
 
   getData = () => {
-    const { queryValue } = this.state;
-    const { page } = this.state;
+    const { queryValue, page } = this.state;
     return getFetchMoviesSearch(page, queryValue)
       .then((results) => {
         this.setState((prevState) => ({
           movies: [...results],
-        }));
+          page: prevState.page + 1,
+      }));
       })
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -50,16 +48,11 @@ class MoviesPage extends Component {
 
   nextPageButton = () => {
     this.getData();
-    this.setState((prevState) => ({
-      page: prevState.page + 1,
-    }));
   };
 
   prevPageButton = () => {
-    this.getData();
-    this.setState((prevState) => ({
-      page: prevState.page - 1,
-    }));
+    const { location, history } = this.props;
+    history.push(location?.state?.from || routes.movies);
   };
 
   validateInput = (value) => {
@@ -73,10 +66,15 @@ class MoviesPage extends Component {
     const { queryValue } = e.target;
     this.validateInput(queryValue.value);
     queryValue.value = "";
+    // this.setState((prevState) => ({
+    //   page: prevState.page,
+    // }));
   };
 
   render() {
     const { movies, url, page } = this.state;
+    console.log(movies);
+    console.log(page);
     return (
       <>
         <FormSearch onSubmit={this.onSubmit} />
@@ -86,8 +84,8 @@ class MoviesPage extends Component {
         <Container fluid="md">
           <Row className="justify-content-md-center">
             <Col md="auto">
-              {page > 2 && <PrevButton onClick={this.prevPageButton} />}
-              {movies.length > 0 && (
+              {page > 1 && <PrevButton onClick={this.prevPageButton} />}
+              {movies.length >= 20 && (
                 <NextButton onClick={this.nextPageButton} />
               )}
             </Col>

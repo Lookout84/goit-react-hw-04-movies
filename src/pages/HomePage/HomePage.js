@@ -26,9 +26,9 @@ class HomePage extends Component {
     const { page } = this.state;
     return getFetchTrending(page)
       .then((results) => {
-        this.setState((prevState) => ({
+        this.setState({
           movies: [...results],
-        }));
+        });
       })
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -57,7 +57,9 @@ class HomePage extends Component {
           <Row className="justify-content-md-center">
             <Col md="auto">
               {page > 2 && <PrevButton onClick={this.prevPageButton} />}
-              <NextButton onClick={this.nextPageButton} />
+              {movies.length >= 20 && (
+                <NextButton onClick={this.nextPageButton} />
+              )}
             </Col>
           </Row>
         </Container>
