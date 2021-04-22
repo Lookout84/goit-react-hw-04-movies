@@ -67,9 +67,10 @@ class HomePage extends Component {
     );
   }
 }
-export default HomePage;
+export default HomePage;  
 
 HomePage.propTypes = {
   onClick: PropTypes.func,
   movies: PropTypes.object,
+  url: PropTypes.string,
 };

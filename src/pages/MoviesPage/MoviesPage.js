@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { getFetchMoviesSearch } from "../../services/apiMoviesFetch";
 import MoviesList from "../../components/MoviesList/MoviesList";
-import PrevButton from "../../components/Button/PrevButton";
 import NextButton from "../../components/Button/NextButton";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-import routes from "../../../src/routes";
 import FormSearch from "../../components/Form/FormSearch";
 
 class MoviesPage extends Component {
@@ -29,6 +27,7 @@ class MoviesPage extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.queryValue !== this.state.queryValue) {
+      this.setState({ page: 1 });
       this.getData();
     }
   }
@@ -40,7 +39,7 @@ class MoviesPage extends Component {
         this.setState((prevState) => ({
           movies: [...results],
           page: prevState.page + 1,
-      }));
+        }));
       })
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
@@ -48,11 +47,6 @@ class MoviesPage extends Component {
 
   nextPageButton = () => {
     this.getData();
-  };
-
-  prevPageButton = () => {
-    const { location, history } = this.props;
-    history.push(location?.state?.from || routes.movies);
   };
 
   validateInput = (value) => {
@@ -66,15 +60,10 @@ class MoviesPage extends Component {
     const { queryValue } = e.target;
     this.validateInput(queryValue.value);
     queryValue.value = "";
-    // this.setState((prevState) => ({
-    //   page: prevState.page,
-    // }));
   };
 
   render() {
-    const { movies, url, page } = this.state;
-    console.log(movies);
-    console.log(page);
+    const { movies, url } = this.state;
     return (
       <>
         <FormSearch onSubmit={this.onSubmit} />
@@ -84,7 +73,6 @@ class MoviesPage extends Component {
         <Container fluid="md">
           <Row className="justify-content-md-center">
             <Col md="auto">
-              {page > 1 && <PrevButton onClick={this.prevPageButton} />}
               {movies.length >= 20 && (
                 <NextButton onClick={this.nextPageButton} />
               )}
@@ -100,5 +88,6 @@ export default MoviesPage;
 
 MoviesPage.propTypes = {
   onSubmit: PropTypes.func,
+  onClick: PropTypes.func,
   movies: PropTypes.object,
 };

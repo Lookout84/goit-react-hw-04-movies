@@ -3,7 +3,7 @@ import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { Navigation } from "./components/Navigation";
 import { Switch, Route } from "react-router-dom";
-import { withRouter } from "react-router-dom";
+//import { withRouter } from "react-router-dom";
 import routes from "./routes";
 import { Container } from "react-bootstrap";
 
@@ -24,4 +24,4 @@ function App() {
   );
 }
 
-export default withRouter(App);
+export default App;
