@@ -11,6 +11,10 @@ import {
 const imgError = `https://i.ibb.co/TTCCj2F/img-error.png`;
 
 const DetalisList = ({ movie, genres, url }) => {
+  let releaseDate = "";
+  if (!!movie.release_date) {
+   releaseDate = movie.release_date.split("-")[0];
+  }
   return (
     <Container fluid="md">
       <Row className="justify-content-md-center">
@@ -25,7 +29,9 @@ const DetalisList = ({ movie, genres, url }) => {
               width="500"
             />
             <Card.Body>
-              <Card.Title>{movie.title}</Card.Title>
+              <Card.Title>
+                {movie.title} ({releaseDate})
+              </Card.Title>
               <Card.Text>
                 Overview: {movie.overview || "This movie has no overview yet."}
               </Card.Text>

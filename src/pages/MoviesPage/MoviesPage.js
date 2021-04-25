@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { getFetchMoviesSearch } from "../../services/apiMoviesFetch";
 import MoviesList from "../../components/MoviesList/MoviesList";
-import PrevButton from "../../components/Button/PrevButton";
 import NextButton from "../../components/Button/NextButton";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 import FormSearch from "../../components/Form/FormSearch";
+import qString from "query-string";
 
 class MoviesPage extends Component {
   state = {
@@ -18,30 +18,51 @@ class MoviesPage extends Component {
   };
 
   componentDidMount() {
-    const { queryValue } = this.state;
-    if (queryValue) {
-      getFetchMoviesSearch(queryValue).then((movies) =>
-        this.setState({ movies })
-      );
+    const { search, pathname } = this.props.location;
+    if (search && pathname) {
+      this.setState({
+        queryValue: qString.parse(search).query,
+      });
     }
+    // const { queryValue } = this.state;
+    // if (queryValue) {
+    //   getFetchMoviesSearch(queryValue).then((movies) =>
+    //     this.setState({ movies })
+    //   );
+    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.queryValue !== this.state.queryValue) {
+      this.setState({ page: 1 });
       this.getData();
-      this.setState((prevState) => ({
-        page: prevState.page + 1,
-      }));
     }
   }
 
+  changeQuery = (query) => {
+    console.log(query);
+    const { history, location } = this.props;
+    this.setState({
+      queryValue: query,
+      movies: {},
+      error: false,
+    });
+    history.push({
+      ...location,
+      search: `query=${query}`,
+    });
+  };
+
   getData = () => {
-    const { queryValue } = this.state;
-    const { page } = this.state;
-    return getFetchMoviesSearch(page, queryValue)
+    const { queryValue, page } = this.state;
+    console.log(queryValue);
+    const options = { queryValue, page };
+
+    return getFetchMoviesSearch(options)
       .then((results) => {
         this.setState((prevState) => ({
           movies: [...results],
+          page: prevState.page + 1,
         }));
       })
       .catch((error) => this.setState({ error }))
@@ -50,44 +71,33 @@ class MoviesPage extends Component {
 
   nextPageButton = () => {
     this.getData();
-    this.setState((prevState) => ({
-      page: prevState.page + 1,
-    }));
   };
 
-  prevPageButton = () => {
-    this.getData();
-    this.setState((prevState) => ({
-      page: prevState.page - 1,
-    }));
-  };
+  // validateInput = (value) => {
+  //   if (value.trim() !== "") {
+  //     this.setState({ queryValue: value });
+  //   }
+  // };
 
-  validateInput = (value) => {
-    if (value.trim() !== "") {
-      this.setState({ queryValue: value });
-    }
-  };
-
-  onSubmit = (e) => {
-    e.preventDefault();
-    const { queryValue } = e.target;
-    this.validateInput(queryValue.value);
-    queryValue.value = "";
-  };
+  // onSubmit = (e) => {
+  //   e.preventDefault();
+  //   const { queryValue } = e.target;
+  //   this.validateInput(queryValue.value);
+  //   queryValue.value = "";
+  // };
 
   render() {
-    const { movies, url, page } = this.state;
+    const { movies, url } = this.state;
     return (
       <>
-        <FormSearch onSubmit={this.onSubmit} />
+        <FormSearch onSubmit={this.changeQuery} />
         <Container>
           {movies.length > 0 && <MoviesList movies={movies} url={url} />}
         </Container>
         <Container fluid="md">
           <Row className="justify-content-md-center">
             <Col md="auto">
-              {page > 2 && <PrevButton onClick={this.prevPageButton} />}
-              {movies.length > 0 && (
+              {movies.length >= 20 && (
                 <NextButton onClick={this.nextPageButton} />
               )}
             </Col>
@@ -102,5 +112,6 @@ export default MoviesPage;
 
 MoviesPage.propTypes = {
   onSubmit: PropTypes.func,
+  onClick: PropTypes.func,
   movies: PropTypes.object,
 };

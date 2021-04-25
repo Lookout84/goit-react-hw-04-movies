@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import routes from "../../../src/routes";
 import { fetchMovieDetail } from "../../services/apiMoviesFetch";
 import DetalisList from "../../components/DetalisList/DetalisList";
 import { NavLink } from "react-router-dom";
 import addRoutes from "../../../src/addRoutes";
 import RoutesDetalies from "../../components/RoutesDetalis";
 import { Button, Container, Card, Row, Col } from "react-bootstrap";
+import PropTypes from "prop-types";
+import routes from "../../../src/routes";
 
 class MovieDetailsPage extends Component {
   state = {
@@ -49,9 +50,20 @@ class MovieDetailsPage extends Component {
   };
 
   handleGoBack = () => {
+    const path = routes.map((route) => route.path);
+    console.log(path);
     const { location, history } = this.props;
-    history.push(location?.state?.from || routes.movies);
+    history.push(location?.state?.from || routes.home);
   };
+
+  // handleGoBack() {
+  //   this.props.history.goBack();
+  // }
+
+  // constructor(props) {
+  //   super(props);
+  //   this.handleGoBack = this.handleGoBack.bind(this);
+  // }
 
   render() {
     const { match } = this.props;
@@ -103,3 +115,9 @@ class MovieDetailsPage extends Component {
 }
 
 export default MovieDetailsPage;
+
+MovieDetailsPage.propTypes = {
+  onClick: PropTypes.func,
+  movie: PropTypes.object,
+  url: PropTypes.string,
+};
