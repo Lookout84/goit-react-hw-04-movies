@@ -40,12 +40,10 @@ class MoviesPage extends Component {
   }
 
   changeQuery = (query) => {
-    console.log(query);
     const { history, location } = this.props;
     this.setState({
       queryValue: query,
       movies: {},
-      error: false,
     });
     history.push({
       ...location,
@@ -55,10 +53,7 @@ class MoviesPage extends Component {
 
   getData = () => {
     const { queryValue, page } = this.state;
-    console.log(queryValue);
-    const options = { queryValue, page };
-
-    return getFetchMoviesSearch(options)
+    return getFetchMoviesSearch(page, queryValue)
       .then((results) => {
         this.setState((prevState) => ({
           movies: [...results],
@@ -72,12 +67,6 @@ class MoviesPage extends Component {
   nextPageButton = () => {
     this.getData();
   };
-
-  // validateInput = (value) => {
-  //   if (value.trim() !== "") {
-  //     this.setState({ queryValue: value });
-  //   }
-  // };
 
   // onSubmit = (e) => {
   //   e.preventDefault();
