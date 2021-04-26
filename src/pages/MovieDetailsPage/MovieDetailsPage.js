@@ -50,8 +50,6 @@ class MovieDetailsPage extends Component {
   };
 
   handleGoBack = () => {
-    const path = routes.map((route) => route.path);
-    console.log(path);
     const { location, history } = this.props;
     history.push(location?.state?.from || routes.home);
   };

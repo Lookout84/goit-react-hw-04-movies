@@ -21,16 +21,18 @@ class FormSearch extends Component {
     });
   };
 
-  validateInput = (value) => {
-    if (value.trim() !== "") {
-      this.setState({ query: value });
-    }
-  };
+  // validateInput = (value) => {
+  //   if (value.trim() !== "") {
+  //     this.setState({ query: value });
+  //   }
+  // };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const queryValue = this.validateInput(this.state.query);
-    this.props.onSubmit(queryValue);
+    const queryValue = this.state.query;
+    if (queryValue.trim() !== "") {
+      this.props.onSubmit(queryValue);
+    }
     this.setState({
       query: "",
     });
